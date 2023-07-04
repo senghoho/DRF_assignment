@@ -17,7 +17,7 @@ class AlbumSerializer(serializers.ModelSerializer):
         fields = ['id','artist','title','year','description','created_at','updated_at','tracks']
 
 class TrackSerializer(serializers.ModelSerializer):
-    id = serializers.CharField(read_only=True)
+    #id = serializers.CharField(read_only=True)
     created_at = serializers.CharField(read_only=True)
     updated_at = serializers.CharField(read_only=True)
 
@@ -28,6 +28,6 @@ class TrackSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Track
-        fields = '__all__'
+        fields = ['created_at','updated_at','album','number','title']
         read_only_fields = ['album']
 

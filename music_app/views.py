@@ -23,17 +23,18 @@ def album_list_create(request):
 
 #track
 @api_view(['GET', 'POST'])
-def track_list_create(request):
+def track_list_create(request, album_id):
+    album = get_object_or_404(Album, id=album_id)
 
     if request.method == 'GET':
-        tracks = Track.objects.all()
+        tracks = Track.objects.filter(album=album)
         serializer = TrackSerializer(tracks, many=True)
         return Response(data=serializer.data)
     
     if request.method == 'POST':
         serializer = TrackSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save()
+            serializer.save(album=album)
             return Response(data=serializer.data)
 
 
